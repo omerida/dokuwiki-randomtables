@@ -16,7 +16,7 @@ class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
     /** @inheritDoc */
     public function getPType()
     {
-        return 'stack';
+        return 'block';
     }
 
     /** @inheritDoc */
@@ -44,10 +44,10 @@ class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
 
      	switch ($state) {
 			case DOKU_LEXER_ENTER:
-				preg_match('/\s([A-Za-z1-9]+)\>$/', $match, $parts);
+				preg_match('/\s([A-Za-z0-9_]+)\>$/', $match, $parts);
 				$tableID[] = $parts[1];
 
-				return [$state, $match];
+				return [$state, $match, $parts[1]];
 
 			case DOKU_LEXER_UNMATCHED:
 				$match = preg_split("/(\r|\n|\r\n)/m", $match);
@@ -86,9 +86,11 @@ class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
 
 		switch ($state) {
 			case DOKU_LEXER_ENTER:
-
-				$renderer->doc .= '<table class="inline table table-striped table-condensed randomtable">';
-				$renderer->doc .='<thead><tr><th>Range</th><th>Result</th></tr></thead>';
+				$id = $data[2];
+				$renderer->doc .= '<div class="randomtable-well"><button class="randomtable" data-src="' . $id . '" data-target="results-' 
+					           . $id . '">Roll</button><div id="results-' . $id .'" class="results"></div></div>' . PHP_EOL;
+				$renderer->doc .= '<table id="' . $id.'" class="inline table table-striped table-condensed randomtable">' . PHP_EOL;
+				$renderer->doc .='<thead><tr><th>Range</th><th>Result</th></tr></thead>' . PHP_EOL;
 				break;
 
 			case DOKU_LEXER_UNMATCHED:
@@ -101,13 +103,13 @@ class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
 					$renderer->doc .= '<tr>'
 						. '<td>' . $range . '</td>'
 						. '<td>' . $renderer->_xmlEntities($txt) .'</td>'
-						. '</tr>'; 
+						. '</tr>' . PHP_EOL; 
 				}
 
 				break;
 
 			case DOKU_LEXER_EXIT:
-				$renderer->doc .= "</table>";
+				$renderer->doc .= "</table>" . PHP_EOL;
 				break;
 		}
 
