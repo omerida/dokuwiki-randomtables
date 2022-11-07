@@ -3,5 +3,5 @@ author Oscar Merida
 email  oscar@oscarm.org
 date   2022-10-23
 name   randomtables plugin
-desc   Roll Random Tables
-url    https://oscarm.org
+desc   Define Random Tables in markup and then roll to see results on the page.
+url    https://github.com/omerida/dokuwiki-randomtables

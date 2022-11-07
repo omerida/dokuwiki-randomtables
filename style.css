@@ -28,3 +28,14 @@
 	float: right;
 	font-size: 0.9rem;
 }
+
+table.randomtable tr td {
+	padding-left: 1rem;
+}
+
+table.randomtable tr td:first-of-type {
+	width: 2rem;
+	padding-right: 1rem;
+	text-align: right;
+	border-right: 1px solid #ccc;
+}

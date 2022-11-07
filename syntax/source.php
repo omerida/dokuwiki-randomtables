@@ -5,40 +5,40 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Oscar Merida <oscar@oscarm.org>
  */
-class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
+class syntax_plugin_randomtables_source  extends \dokuwiki\Extension\SyntaxPlugin
 {
     /** @inheritDoc */
-    public function getType()
+    public function getType(): string
     {
         return 'protected';
     }
 
     /** @inheritDoc */
-    public function getPType()
+    public function getPType(): string
     {
         return 'block';
     }
 
     /** @inheritDoc */
-    public function getSort()
+    public function getSort(): int
     {
         return 200;
     }
 
     /** @inheritDoc */
-    public function connectTo($mode)
+    public function connectTo($mode): void
     {
-        $this->Lexer->addEntryPattern('\<RANDOMTABLE\s+[A-Za-z0-9_]+>', $mode, 'plugin_randomtables');
+        $this->Lexer->addEntryPattern('\<RANDOMTABLE\s+[A-Za-z0-9_]+>', $mode, 'plugin_randomtables_source');
     }
 
     /** @inheritDoc */
-    public function postConnect()
+    public function postConnect(): void
     {
-        $this->Lexer->addExitPattern('</RANDOMTABLE>', 'plugin_randomtables');
+        $this->Lexer->addExitPattern('</RANDOMTABLE>', 'plugin_randomtables_source');
     }
 
     /** @inheritDoc */
-    public function handle($match, $state, $pos, Doku_Handler $handler)
+    public function handle($match, $state, $pos, Doku_Handler $handler): array
     {
 		static $tableID;
 
@@ -72,17 +72,13 @@ class syntax_plugin_randomtables extends \dokuwiki\Extension\SyntaxPlugin
     }
 
     /** @inheritDoc */
-    public function render($mode, Doku_Renderer $renderer, $data)
+    public function render($mode, Doku_Renderer $renderer, $data): bool
     {
         if ($mode !== 'xhtml') {
             return false;
         }		
 
-		list($state, $match) = $data;
-
-		// if ($_GET['do']) {
-		//	$renderer->doc .= 'THIS IS A PREVIEW';
-		// }
+        [$state, $match] = $data;
 
 		switch ($state) {
 			case DOKU_LEXER_ENTER:
