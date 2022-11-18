@@ -47,7 +47,7 @@ class syntax_plugin_randomtables_roller  extends \dokuwiki\Extension\SyntaxPlugi
 
 		[$state, $match, $id] = $data;
 
-		$renderer->doc .= '<div class="randomtable-well"><button class="randomtable" data-src="' . $id . '" data-target="results-' 
+		$renderer->doc .= '<div class="randomtable-well"><button class="randomtable" data-src="'. $id . '" data-target="results-'
 					   . $id . '">Roll</button><div id="results-' . $id .'" class="results"></div></div>' . PHP_EOL;
 
         return true;
