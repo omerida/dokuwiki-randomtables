@@ -24,10 +24,10 @@ class Manager
 		self::$embedCalls++;
 		if (self::$embedCalls < 20) {
 			$table = $this->getTable($matches[1]);
-			return $table->rollOnce();
-		} else {
-			return "Too many recursive calls";
+			return trim($table->rollOnce());
 		}
+
+        return "Too many recursive calls";
 	}
 
 	private function getTable(string $name): TableInterface
