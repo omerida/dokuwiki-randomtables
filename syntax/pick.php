@@ -67,7 +67,7 @@ class syntax_plugin_randomtables_pick extends \dokuwiki\Extension\SyntaxPlugin
             case DOKU_LEXER_UNMATCHED:
                 $id = md5(serialize($data));
 
-                $renderer->doc .= '<select class="randomtable-pick" name="' . $id. '">';
+                $renderer->doc .= '<div><select class="randomtable-pick" id="' . $id. '">';
                 $renderer->doc .= '<option value="">Select Table</option>';
 
                 $tables = preg_split('/[\r\n]+/', $match);
@@ -81,12 +81,12 @@ class syntax_plugin_randomtables_pick extends \dokuwiki\Extension\SyntaxPlugin
 
                     $ident =  $renderer->_xmlEntities(trim($ident));
                     $label =  $renderer->_xmlEntities(trim($label));
-                    $renderer->doc .= "<option vale=\"{$ident}\">{$label}</option>";
+                    $renderer->doc .= "<option value=\"{$ident}\">{$label}</option>";
                 }
                 $renderer->doc .= '</select>';
 
-                $renderer->doc .= '<button class="randomtable" data-src="' . $id . '" data-target="results-'
-                    . $id . '">Roll</button><div id="results-' . $id . '" class="results"></div>';
+                $renderer->doc .= '<button class="randomtable" data-pick="' . $id . '" data-target="results-'
+                    . $id . '">Roll</button></div><div id="results-' . $id . '" class="results"></div>';
                 break;
             case DOKU_LEXER_EXIT:
                 $renderer->doc .= '</div>' . PHP_EOL;
