@@ -10,9 +10,11 @@ var random_tables_plugin = {
      */
     roll: function($btn) {
         let src = $btn.data('src');
+        let prefix = '';
         if (!src) {
-            let srcSelect = jQuery('select#' + $btn.data('pick'));
-            src = srcSelect.val();
+            let $srcSelect = jQuery('select#' + $btn.data('pick'));
+            src = $srcSelect.find(':selected').val();
+            prefix = $srcSelect.find(':selected').text() + ': ';
         }
 
         if (!src) {
@@ -30,15 +32,15 @@ var random_tables_plugin = {
                 table_id: src,
             },
             function(response) {
-                random_tables_plugin.addResult(targetDiv, response);
+                random_tables_plugin.addResult(targetDiv, response, prefix);
             },
             'json'
         );
     }, // roll
 
-    addResult: function(targetDiv, response) {
+    addResult: function(targetDiv, response, prefix) {
         // update the result
-        targetDiv.append('<div>' + response.result + '<button class="delete">del</button></div>');
+        targetDiv.append('<div>' + prefix + response.result + '<button class="delete">del</button></div>');
         targetDiv.find('button').on('click', function(ev) {
             jQuery(this).parent().first().remove();
         });
