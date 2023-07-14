@@ -65,7 +65,7 @@ class syntax_plugin_randomtables_roller extends \dokuwiki\Extension\SyntaxPlugin
                 $renderer->doc .= '<div class="randomtable-well">' . PHP_EOL;
                 break;
             case DOKU_LEXER_UNMATCHED:
-                $id = $data[1];
+                $id = $renderer->_xmlEntities($data[1]);
                 $renderer->doc .= '<button class="randomtable" data-src="' . $id . '" data-target="results-'
                     . $id . '">Roll</button><div id="results-' . $id . '" class="results"></div>';
                 break;
