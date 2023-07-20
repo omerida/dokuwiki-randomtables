@@ -19,11 +19,11 @@ class action_plugin_randomtables_ajax extends \dokuwiki\Extension\ActionPlugin
 	{
 		try {
 			$helper = $this->loadHelper('randomtables_helper');
-            $db = $helper->getDB();
-        } catch (Exception $e) {
-            msg($e->getMessage(), -1);
-            return;
-        }
+			$db = $helper->getDB();
+		} catch (Exception $e) {
+			msg($e->getMessage(), -1);
+			return;
+		}
 
 		$data = $event->data;
 		$id = $data['id'];
@@ -43,7 +43,7 @@ class action_plugin_randomtables_ajax extends \dokuwiki\Extension\ActionPlugin
 	}
 
 	function ajax_call(Doku_Event $event, $param):void
-    {
+	{
 		if ($event->data !== 'plugin_randomtable_roll') {
 			return;
 		}
@@ -61,20 +61,20 @@ class action_plugin_randomtables_ajax extends \dokuwiki\Extension\ActionPlugin
 		// get the DB
 		try {
 			$helper = $this->loadHelper('randomtables_helper');
-            $db = $helper->getDB();
-        } catch (Exception $e) {
-            msg($e->getMessage(), -1);
-            return;
-        }
+			$db = $helper->getDB();
+		} catch (Exception $e) {
+			msg($e->getMessage(), -1);
+			return;
+		}
 
 		$this->setupAutoloader();
 
 
 		$manager = new TableRoller\Table\Manager($db);
 		$pick = $manager->rollOn($tableId);
-
+		$pick = trim(htmlentities($pick, ENT_QUOTES | ENT_SUBSTITUTE | ENT_XHTML));
 		header('Content-Type: application/json');
-		echo json_encode(['result' => trim($pick)]);
+		echo json_encode(['result' => $pick]);
 	}
 
 	private function setupAutoloader()
@@ -106,6 +106,6 @@ class action_plugin_randomtables_ajax extends \dokuwiki\Extension\ActionPlugin
 			if (file_exists($file)) {
 				require $file;
 			}
-        });
+		});
 	}
 }

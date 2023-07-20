@@ -27,15 +27,19 @@ class Manager
 			return trim($table->rollOnce());
 		}
 
-        return "Too many recursive calls";
+		return "Too many recursive calls";
 	}
 
 	private function getTable(string $name): TableInterface
 	{
 		if (!isset(self::$tables[$name])) {
-			$result = $this->db->query('SELECT * FROM rtables WHERE id=? LIMIT 1', $name); 
+			$result = $this->db->query('SELECT * FROM rtables WHERE id=? LIMIT 1', $name);
 			$row = $this->db->res_fetch_assoc($result);
-			self::$tables[$name] = new DokuwikiJsonTable($row['rows']);
+			if ($row['rows']) {
+				self::$tables[$name] = new DokuwikiJsonTable($row['rows']);
+			} else {
+				self::$tables[$name] = new BaseTable();
+			}
 		}
 
 		return self::$tables[$name];

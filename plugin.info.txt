@@ -1,7 +1,7 @@
 base   randomtables
 author Oscar Merida
 email  oscar@oscarm.org
-date   2023-04-13
+date   2023-07-19
 name   randomtables plugin
 desc   Define Random Tables in markup and then roll to see results on the page.
 url    https://github.com/omerida/dokuwiki-randomtables
