@@ -17,6 +17,14 @@ var random_tables_plugin = {
             prefix = $srcSelect.find(':selected').text() + ': ';
         }
 
+        if (prefix === '') {
+            let text = $btn.text();
+            text.replace(/^Roll\s+/, '');
+            if (text.length > 0) {
+                prefix = text;
+            }
+        }
+
         if (!src) {
             return;
         }
