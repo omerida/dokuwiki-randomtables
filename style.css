@@ -8,7 +8,7 @@
 }
 
 
-randomtable-well-column {
+.randomtable-well-column {
     flex-direction: column;
     align-items: stretch;
 }
