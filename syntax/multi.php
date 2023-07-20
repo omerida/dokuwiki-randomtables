@@ -62,13 +62,14 @@ class syntax_plugin_randomtables_multi extends \dokuwiki\Extension\SyntaxPlugin
 
         switch ($state) {
             case DOKU_LEXER_ENTER:
-                $renderer->doc .= '<div class="randomtable-well">' . PHP_EOL;
+                $renderer->doc .= '<div class="randomtable-well randomtable-well-column">' . PHP_EOL;
                 break;
             case DOKU_LEXER_UNMATCHED:
-                $id = md5(serialize($data));
+                $id = md5(__CLASS__ . serialize($data));
 
                 $tables = preg_split('/[\r\n]+/', $match);
                 $tables = array_filter($tables);
+                $renderer->doc .= '<div class="btnGroup">';
                 foreach ($tables as $table) {
                     if (str_contains($table, ':')) {
                         [$ident, $label] = explode(':', $table,2);
@@ -78,15 +79,14 @@ class syntax_plugin_randomtables_multi extends \dokuwiki\Extension\SyntaxPlugin
 
                     $ident =  $renderer->_xmlEntities(trim($ident));
                     $label =  $renderer->_xmlEntities(trim($label));
-                    $renderer->doc .= "<option value=\"{$ident}\">{$label}</option>";
 
                     $id = $renderer->_xmlEntities($id);
                     $renderer->doc .= '<button class="randomtable" data-src="'
                         . $ident . '" data-target="results-'
                         . $id . '">Roll ' . $label
-                        . '</button><div id="results-' . $id . '" class="results"></div>';
+                        . '</button>';
                 }
-
+                $renderer->doc .= '</div><div id="results-' . $id . '" class="results"></div>';
                 break;
             case DOKU_LEXER_EXIT:
                 $renderer->doc .= '</div>' . PHP_EOL;
