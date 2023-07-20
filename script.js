@@ -21,7 +21,7 @@ var random_tables_plugin = {
             let text = $btn.text();
             text = text.replace(/^Roll\s+/, '');
             if (text.length > 0) {
-                prefix = text;
+                prefix = text + ': ';
             }
         }
 
