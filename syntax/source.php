@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\Event;
+
 /**
  * DokuWiki Plugin randomtable (Syntax Component)
  *
@@ -59,7 +62,7 @@ class syntax_plugin_randomtables_source  extends \dokuwiki\Extension\SyntaxPlugi
 						'lines' => $match,
 						'id' => array_pop($tableID),
 					];
-					trigger_event('randomtables_save', $data);
+					Event::createAndTrigger('randomtables_save', $data);
 				}
 
 				return [$state, $match];
