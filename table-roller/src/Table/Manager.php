@@ -24,7 +24,8 @@ class Manager
 		self::$embedCalls++;
 		if (self::$embedCalls < 20) {
 			$table = $this->getTable($matches[1]);
-			return trim($table->rollOnce());
+			$result = $table->rollOnce();
+			return preg_replace_callback('/{{roll on:\s*([A-Za-z0-9_]+)\s*}}/i', [$this, 'embedResult'], $result);
 		}
 
 		return "Too many recursive calls";
